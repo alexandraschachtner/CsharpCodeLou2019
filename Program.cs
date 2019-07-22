@@ -10,22 +10,28 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            // connecting to directory off Volunteers.csv
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
             var fileName = Path.Combine(directory.FullName, "Volunteers.csv");
             var file = new FileInfo(fileName);
-
+            var fileContents = ReadFile(fileName);
+            Console.WriteLine(fileContents);
+            Console.WriteLine("-----------");
+            Console.WriteLine("  ");
+            // This ends the first promt in the console. 
+            
+            //Convert to string array?  im still a bit confused with this part
             string[] values = File.ReadAllLines(fileName);
 
             var values2 = values.Skip(1)
                                           .Select(v => FromCsv(v))
                                           .ToList();
-
+            //Start of input for probram functions
             Console.WriteLine("Hello please search for vounteer by name");
             var entry = Console.ReadLine();
 
             var found = values2.FirstOrDefault(c => c.First == entry);
-
 
             if (found != null)
             {
@@ -33,25 +39,30 @@ namespace ConsoleApp1
             }
             else
             {
-                Console.WriteLine("Not Found");
+                Console.WriteLine("Not Found!!! Please enter new Volunteer Info:");
+                Console.WriteLine("--------------------");
+                Console.WriteLine(" ");
                 var volunteer = addVolunteer(entry);
                 values2.Add(volunteer);
                 var test = values2.Select(c => c.Convert()).ToArray();
                 File.WriteAllLines(fileName, test);
-              //  File.AppendAllText(fileName, test.ToString());
+              // This last bit should write the new line to the csv, but the csv is not getting updated.
             }
 
             Console.WriteLine("Thank you");
-            var fileContents = ReadFile(fileName);
+            Console.WriteLine("--------------------");
+            Console.WriteLine(" ");
             Console.WriteLine(fileContents);
         }
-
+        // ReadFile - this should close after exicuted but it is not.  Keep getting Sysmt.io error where csv file still in use
         private static string ReadFile(string fileName)
         {
             using (var reader = new StreamReader(fileName))
+                {
                 return reader.ReadToEnd();
+                }
         }
-
+        // addVolunteer
         private static Volunteer addVolunteer(string first)
         {
             Volunteer returnValue = new Volunteer();
@@ -65,7 +76,7 @@ namespace ConsoleApp1
             return returnValue;
 
         }
-
+        //FromCsv
         public static Volunteer FromCsv(string csvLine)
         {
             string[] values = csvLine.Split(',');
