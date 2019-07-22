@@ -16,17 +16,27 @@ namespace ConsoleApp1
             var fileName = Path.Combine(directory.FullName, "Volunteers.csv");
             var file = new FileInfo(fileName);
             var fileContents = ReadFile(fileName);
-            Console.WriteLine(fileContents);
-            Console.WriteLine("-----------");
-            Console.WriteLine("  ");
+            if (file.Exists)
+            {
+                Console.WriteLine(fileContents);
+                Console.WriteLine("-----------");
+                Console.WriteLine("  ");
+            }
+            else
+            {
+                Console.WriteLine("Somehting Went Wrong");
+            }
             // This ends the first promt in the console. 
             
+
             //Convert to string array?  im still a bit confused with this part
             string[] values = File.ReadAllLines(fileName);
 
             var values2 = values.Skip(1)
                                           .Select(v => FromCsv(v))
                                           .ToList();
+            //end of confusing bit
+            
             //Start of input for probram functions
             Console.WriteLine("Hello please search for vounteer by name");
             var entry = Console.ReadLine();
@@ -36,13 +46,25 @@ namespace ConsoleApp1
             if (found != null)
             {
                 Console.WriteLine(found.Print());
+                Console.WriteLine("Did you want to delete this Volunteer?");
+                Console.WriteLine("-----Y or N-------");
+                // Want to make it delete the line if y is entered 
+                //var yes = Console.ReadLine();
+                // if (yes == "y")
+                //{
+
+                //}
+                //else
+                //{
+                //   return;
+                //}
             }
             else
             {
                 Console.WriteLine("Not Found!!! Please enter new Volunteer Info:");
                 Console.WriteLine("--------------------");
                 Console.WriteLine(" ");
-                var volunteer = addVolunteer(entry);
+                var volunteer = AddVolunteer(entry);
                 values2.Add(volunteer);
                 var test = values2.Select(c => c.Convert()).ToArray();
                 File.WriteAllLines(fileName, test);
@@ -63,7 +85,7 @@ namespace ConsoleApp1
                 }
         }
         // addVolunteer
-        private static Volunteer addVolunteer(string first)
+        private static Volunteer AddVolunteer(string first)
         {
             Volunteer returnValue = new Volunteer();
             returnValue.First = first;
