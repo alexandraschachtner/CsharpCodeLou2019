@@ -20,9 +20,10 @@ namespace ConsoleApp1
             var fileContents = ReadFile(fileName);
             if (file.Exists)
             {
+                // writing file contents to test : the skip 1 seems to be moving where it reads after adding data
                 Console.WriteLine(fileContents);
                 Console.WriteLine("-----------");
-                Console.WriteLine("  ");
+                //Console.WriteLine("  ");
             }
             else
             {
@@ -30,20 +31,24 @@ namespace ConsoleApp1
             }
             // This ends the first promt in the console. 
             
+            List<Volunteer> values = File.ReadAllLines("Volunteers.csv")
+                                           .Skip(1)
+                                           .Select(v => FromCsv(v))
+                                           .ToList();
 
             //Convert to string array?  im still a bit confused with this part
-            string[] values = File.ReadAllLines(fileName);
+            //string[] values = File.ReadAllLines(fileName);
 
-            var values2 = values.Skip(1)
-                                          .Select(v => FromCsv(v))
-                                          .ToList();
+            //var values2 = values.Skip(1)
+            //                              .Select(v => FromCsv(v))
+            //                              .ToList();
             //end of confusing bit
             
             //Start of input for probram functions
             Console.WriteLine("Hello please search for vounteer by name");
             var entry = Console.ReadLine();
 
-            var found = values2.FirstOrDefault(c => c.First == entry);
+            var found = values.FirstOrDefault(c => c.First == entry);
 
             if (found != null)
             {
@@ -54,7 +59,12 @@ namespace ConsoleApp1
                 var yes = Console.ReadLine();
                 if (yes == "y")
                 {
-                    File.Delete(fileName);//Not sure how to delete
+                   // foreach (string found in fileName)
+                    //{
+                    //    File.Delete(found);
+                    //}
+                    File.Delete(fileName);
+                    
                 }
                 else
                 {
@@ -67,8 +77,8 @@ namespace ConsoleApp1
                 Console.WriteLine("--------------------");
                 Console.WriteLine(" ");
                 var volunteer = AddVolunteer(entry);
-                values2.Add(volunteer);
-                var test = values2.Select(c => c.Convert()).ToArray();
+                values.Add(volunteer);
+                var test = values.Select(c => c.Convert()).ToArray();
                 File.WriteAllLines(fileName, test);
               // This last bit should write the new line to the csv, but the csv is not getting updated.
             }
