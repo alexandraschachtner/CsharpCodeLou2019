@@ -8,6 +8,8 @@ namespace ConsoleApp1
 {
     class Program
     {
+        public static object Delete { get; private set; }
+
         static void Main(string[] args)
         {
             // connecting to directory off Volunteers.csv
@@ -49,15 +51,15 @@ namespace ConsoleApp1
                 Console.WriteLine("Did you want to delete this Volunteer?");
                 Console.WriteLine("-----Y or N-------");
                 // Want to make it delete the line if y is entered 
-                //var yes = Console.ReadLine();
-                // if (yes == "y")
-                //{
-
-                //}
-                //else
-                //{
-                //   return;
-                //}
+                var yes = Console.ReadLine();
+                if (yes == "y")
+                {
+                    File.Delete(fileName);//Not sure how to delete
+                }
+                else
+                {
+                    return;
+                }
             }
             else
             {
@@ -74,7 +76,7 @@ namespace ConsoleApp1
             Console.WriteLine("Thank you");
             Console.WriteLine("--------------------");
             Console.WriteLine(" ");
-            Console.WriteLine(fileContents);
+            return;
         }
         // ReadFile - this should close after exicuted but it is not.  Keep getting Sysmt.io error where csv file still in use
         private static string ReadFile(string fileName)
@@ -84,6 +86,7 @@ namespace ConsoleApp1
                 return reader.ReadToEnd();
                 }
         }
+
         // addVolunteer
         private static Volunteer AddVolunteer(string first)
         {

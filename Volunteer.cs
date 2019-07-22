@@ -12,7 +12,7 @@ namespace ConsoleApp1
         public string Phone { get; set; }
         public string Licence { get; set; }
 
-        public string Print() { return (First + " " + Last + " " + Phone + " " + Licence); }
+        public string Print(){return (First + " " + Last + " " + Phone + " " + Licence);}
         public string Convert(){return First + "," + Last + "," + Phone + "," + Licence;}
         
     }
