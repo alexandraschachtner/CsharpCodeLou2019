@@ -62,8 +62,6 @@ namespace ConsoleApp1
                 if (yes2 == "y")
                 {
                     File.Delete(fileName);
-                    Console.WriteLine(fileContents);
-                    Console.WriteLine("-----------");
                 }
             }
             else
@@ -75,7 +73,10 @@ namespace ConsoleApp1
                 values.Add(volunteer);
                 var test = values.Select(c => c.Convert()).ToArray();
                 File.WriteAllLines(fileName, test);
-              // This last bit should write the new line to the csv, but the csv is not getting updated.
+              /* This last bit should write the new line to the csv, but the csv is not getting updated. Would replacing
+               WriteAllLines with AppendAllLines?  Append requires an IEnumerator and im not sure how to change everyhting
+               over to that or if its nessicary. WriteAllLines creates a new file, hence why it doesnt add to my csv, and 
+               when the File.Delete is called, it only delets all the new information*/
             }
 
             Console.WriteLine("Thank you");
