@@ -20,7 +20,7 @@ namespace ConsoleApp1
             var fileContents = ReadFile(fileName);
             if (file.Exists)
             {
-                // writing file contents to test : the skip 1 seems to be moving where it reads after adding data
+                // writing file contents to test
                 Console.WriteLine(fileContents);
                 Console.WriteLine("-----------");
                 //Console.WriteLine("  ");
@@ -30,10 +30,6 @@ namespace ConsoleApp1
                 Console.WriteLine("Somehting Went Wrong");
             }
             // This ends the first promt in the console. 
-            
-            List<Volunteer> values = File.ReadAllLines("Volunteers.csv")
-                                           .Select(v => FromCsv(v))
-                                           .ToList();
 
             //----------------------------------------------------------------
             //Convert to string array?  im still a bit confused with this part
@@ -45,6 +41,10 @@ namespace ConsoleApp1
             //end of confusing bit ------------------------------------------
             //I've changed this to a list
             
+             List<Volunteer> values = File.ReadAllLines(fileName)
+                                           .Select(v => FromCsv(v))
+                                           .ToList();
+
             //Start of input for program functions
             Console.WriteLine("Hello please search for vounteer by name");
             var entry = Console.ReadLine();
@@ -61,16 +61,9 @@ namespace ConsoleApp1
                 var yes2 = yes.ToLower();
                 if (yes2 == "y")
                 {
-                   // foreach (found in fileName)
-                    //{
-                    //    File.Delete(found);
-                    //}
                     File.Delete(fileName);
-                    
-                }
-                else
-                {
-                    return;
+                    Console.WriteLine(fileContents);
+                    Console.WriteLine("-----------");
                 }
             }
             else
@@ -90,7 +83,9 @@ namespace ConsoleApp1
             Console.WriteLine(" ");
             return;
         }
-        // ReadFile - this should close after exicuted but it is not.  Keep getting Sysmt.io error where csv file still in use
+
+
+        // ReadFile
         private static string ReadFile(string fileName)
         {
             using (var reader = new StreamReader(fileName))
@@ -99,7 +94,7 @@ namespace ConsoleApp1
                 }
         }
 
-        // addVolunteer
+        // AddVolunteer
         private static Volunteer AddVolunteer(string first)
         {
             Volunteer returnValue = new Volunteer();
