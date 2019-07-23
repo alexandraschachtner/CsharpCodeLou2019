@@ -12,7 +12,7 @@ namespace ConsoleApp1
 
         static void Main(string[] args)
         {
-            // connecting to directory off Volunteers.csv
+            // connecting to directory of Volunteers.csv
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
             var fileName = Path.Combine(directory.FullName, "Volunteers.csv");
@@ -32,19 +32,20 @@ namespace ConsoleApp1
             // This ends the first promt in the console. 
             
             List<Volunteer> values = File.ReadAllLines("Volunteers.csv")
-                                           .Skip(1)
                                            .Select(v => FromCsv(v))
                                            .ToList();
 
+            //----------------------------------------------------------------
             //Convert to string array?  im still a bit confused with this part
             //string[] values = File.ReadAllLines(fileName);
 
             //var values2 = values.Skip(1)
             //                              .Select(v => FromCsv(v))
             //                              .ToList();
-            //end of confusing bit
+            //end of confusing bit ------------------------------------------
+            //I've changed this to a list
             
-            //Start of input for probram functions
+            //Start of input for program functions
             Console.WriteLine("Hello please search for vounteer by name");
             var entry = Console.ReadLine();
 
@@ -57,9 +58,10 @@ namespace ConsoleApp1
                 Console.WriteLine("-----Y or N-------");
                 // Want to make it delete the line if y is entered 
                 var yes = Console.ReadLine();
-                if (yes == "y")
+                var yes2 = yes.ToLower();
+                if (yes2 == "y")
                 {
-                   // foreach (string found in fileName)
+                   // foreach (found in fileName)
                     //{
                     //    File.Delete(found);
                     //}
