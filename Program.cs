@@ -3,6 +3,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace ConsoleApp1
 {
@@ -12,14 +13,12 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             // connecting to directory of Volunteers.csv
-            /*string currentDirectory = Directory.GetCurrentDirectory();
+            string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
-            var fileName = Path.Combine(directory.FullName, @"Volunteers.csv");
-            var file = new FileInfo(fileName);*/
-
-            string fileName = @"Volunteers.csv";
+            var fileName = Path.Combine(directory.Parent.Parent.Parent.FullName, @"Volunteers.csv");
+            var file = new FileInfo(fileName);
             var fileContents = ReadFile(fileName);
-            if (File.Exists(fileName))
+            if (file.Exists)
             {
                 // writing file contents to test
                 using (StreamReader sr = File.OpenText(fileName))
@@ -69,7 +68,8 @@ namespace ConsoleApp1
                 var yes2 = yes.ToLower();
                 if (yes2 == "y")
                 {
-                    File.Delete(fileName);
+                    values.Remove(found);
+
                 }
             }
             else
@@ -80,8 +80,11 @@ namespace ConsoleApp1
                 var volunteer = AddVolunteer(entry);
                 values.Add(volunteer);
                 var test = values.Select(c => c.Convert()).ToArray();
-                File.WriteAllLines(fileName, test);
-                
+                using (StreamWriter sw = new StreamWriter(fileName))
+                {
+                    for (var i = 0; i < test.Length; i++)
+                        sw.WriteLine(test[i]);
+                }
               /* This last bit should write the new line to the csv, but the csv is not getting updated. Would replacing
                WriteAllLines with AppendAllLines?  Append requires an IEnumerator and im not sure how to change everyhting
                over to that or if its nessicary. WriteAllLines creates a new file, hence why it doesnt add to my csv, and 
