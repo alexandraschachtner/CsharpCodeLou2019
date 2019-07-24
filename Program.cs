@@ -8,22 +8,30 @@ namespace ConsoleApp1
 {
     class Program
     {
-        public static object Delete { get; private set; }
 
         static void Main(string[] args)
         {
             // connecting to directory of Volunteers.csv
-            string currentDirectory = Directory.GetCurrentDirectory();
+            /*string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
-            var fileName = Path.Combine(directory.FullName, "Volunteers.csv");
-            var file = new FileInfo(fileName);
+            var fileName = Path.Combine(directory.FullName, @"Volunteers.csv");
+            var file = new FileInfo(fileName);*/
+
+            string fileName = @"Volunteers.csv";
             var fileContents = ReadFile(fileName);
-            if (file.Exists)
+            if (File.Exists(fileName))
             {
                 // writing file contents to test
-                Console.WriteLine(fileContents);
-                Console.WriteLine("-----------");
-                //Console.WriteLine("  ");
+                using (StreamReader sr = File.OpenText(fileName))
+                {
+                    string s = " ";
+                    while ((s = sr.ReadLine()) != null)
+                    {
+                        Console.WriteLine(s);
+                        Console.WriteLine("-----------");
+                        //Console.WriteLine("  ");
+                    }
+                }
             }
             else
             {
@@ -73,6 +81,7 @@ namespace ConsoleApp1
                 values.Add(volunteer);
                 var test = values.Select(c => c.Convert()).ToArray();
                 File.WriteAllLines(fileName, test);
+                
               /* This last bit should write the new line to the csv, but the csv is not getting updated. Would replacing
                WriteAllLines with AppendAllLines?  Append requires an IEnumerator and im not sure how to change everyhting
                over to that or if its nessicary. WriteAllLines creates a new file, hence why it doesnt add to my csv, and 
