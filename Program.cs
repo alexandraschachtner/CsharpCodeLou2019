@@ -9,16 +9,14 @@ namespace ConsoleApp1
 {
     public class Program
     {
-        public static string DataDirectory { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
         static void Main(string[] args)
         {
-            var test3 = Program.DataDirectory;
             // connecting to directory of Volunteers.csv
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
             var fileName = Path.Combine(directory.Parent.Parent.Parent.FullName, @"Volunteers.csv");
             var file = new FileInfo(fileName);
-            var fileContents = ReadFile(fileName);
+       
             if (file.Exists)
             {
                 // writing file contents to test
