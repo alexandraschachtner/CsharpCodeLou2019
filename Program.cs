@@ -11,48 +11,35 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            // connecting to directory of Volunteers.csv
+            // connecting to directory of VoleadFileunteers.csv
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
             var fileName = Path.Combine(directory.Parent.Parent.Parent.FullName, @"Volunteers.csv");
             var file = new FileInfo(fileName);
-       
+
+            //var fileContents = ReadFile(fileName);
+            //Console.WriteLine(fileContents);
+
             if (file.Exists)
             {
-                // writing file contents to test
-                using (StreamReader sr = File.OpenText(fileName))
-                {
-                    string s = " ";
-                    while ((s = sr.ReadLine()) != null)
-                    {
-                        Console.WriteLine(s);
-                        Console.WriteLine("-----------");
-                        //Console.WriteLine("  ");
-                    }
-                }
+                OpenFile(fileName);
+
+                Console.WriteLine("All Systems Go");
+                Console.WriteLine("Hello please search for vounteer by name");
+                Console.WriteLine("----------------------------------------");
+                Console.WriteLine("----------------------------------------");
             }
             else
             {
                 Console.WriteLine("Somehting Went Wrong");
             }
-            // This ends the first promt in the console. 
-
-            //----------------------------------------------------------------
-            //Convert to string array?  im still a bit confused with this part
-            //string[] values = File.ReadAllLines(fileName);
-
-            //var values2 = values.Skip(1)
-            //                              .Select(v => FromCsv(v))
-            //                              .ToList();
-            //end of confusing bit ------------------------------------------
-            //I've changed this to a list
             
              List<Volunteer> values = File.ReadAllLines(fileName)
                                            .Select(v => FromCsv(v))
                                            .ToList();
 
             //Start of input for program functions
-            Console.WriteLine("Hello please search for vounteer by name");
+            
             var entry = Console.ReadLine();
 
             var found = values.FirstOrDefault(c => c.First == entry);
@@ -104,6 +91,16 @@ namespace ConsoleApp1
         }
 
 
+
+        //Open File
+        private static void OpenFile(string fileName)
+        {
+            using (StreamReader sr = File.OpenText(fileName))
+            {
+                return;
+            }
+        }
+
         // ReadFile
         private static string ReadFile(string fileName)
         {
@@ -141,4 +138,14 @@ namespace ConsoleApp1
     }
     
 }
-    
+
+
+/*(StreamReader sr = File.OpenText(fileName))
+                {
+                    string s = " ";
+                    while ((s = sr.ReadLine()) != null)
+                    {
+                        Console.WriteLine(s);
+                        Console.WriteLine("-----------");
+                        //Console.WriteLine("  ");
+                    }    */
