@@ -39,9 +39,8 @@ namespace ConsoleApp1
                                            .ToList();
 
             //Start of input for program functions
-            
-            var entry = Console.ReadLine();
 
+            var entry = Console.ReadLine();
             var found = values.FirstOrDefault(c => c.First == entry);
 
             if (found != null)
@@ -49,7 +48,6 @@ namespace ConsoleApp1
                 Console.WriteLine(found.Print());
                 Console.WriteLine("Did you want to delete this Volunteer?");
                 Console.WriteLine("-----Y or N-------");
-                // Want to make it delete the line if y is entered 
                 var yes = Console.ReadLine();
                 var yes2 = yes.ToLower();
                 if (yes2 == "y")
@@ -78,10 +76,6 @@ namespace ConsoleApp1
                     for (var i = 0; i < test.Length; i++)
                         sw.WriteLine(test[i]);
                 }
-              /* This last bit should write the new line to the csv, but the csv is not getting updated. Would replacing
-               WriteAllLines with AppendAllLines?  Append requires an IEnumerator and im not sure how to change everyhting
-               over to that or if its nessicary. WriteAllLines creates a new file, hence why it doesnt add to my csv, and 
-               when the File.Delete is called, it only delets all the new information*/
             }
 
             Console.WriteLine("Thank you");
@@ -135,6 +129,7 @@ namespace ConsoleApp1
             volunteer.Licence = (values[3]);
             return volunteer;
         }
+        //SearchAddDelte
     }
     
 }
