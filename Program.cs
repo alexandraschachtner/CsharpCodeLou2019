@@ -7,11 +7,12 @@ using System.Reflection;
 
 namespace ConsoleApp1
 {
-    class Program
+    public class Program
     {
-
+        public static string DataDirectory { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
         static void Main(string[] args)
         {
+            var test3 = Program.DataDirectory;
             // connecting to directory of Volunteers.csv
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
@@ -69,7 +70,13 @@ namespace ConsoleApp1
                 if (yes2 == "y")
                 {
                     values.Remove(found);
+                    var test = values.Select(c => c.Convert()).ToArray();
 
+                    using (StreamWriter sw = new StreamWriter(fileName))
+                    {
+                        for (var i = 0; i < test.Length; i++)
+                            sw.WriteLine(test[i]);
+                    }
                 }
             }
             else
@@ -79,6 +86,7 @@ namespace ConsoleApp1
                 Console.WriteLine(" ");
                 var volunteer = AddVolunteer(entry);
                 values.Add(volunteer);
+
                 var test = values.Select(c => c.Convert()).ToArray();
                 using (StreamWriter sw = new StreamWriter(fileName))
                 {
