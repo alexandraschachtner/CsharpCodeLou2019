@@ -20,68 +20,85 @@ namespace ConsoleApp1
             if (file.Exists)
             {
                 OpenFile(fileName);
-
-                Console.WriteLine("All Systems Go");
+                Console.WriteLine("Welcome");
                 Console.WriteLine("----------------------------------------");
+                Console.WriteLine("Search by First Name to View Add or Delete a Volunteer");
+                Console.WriteLine("---------Type ALL to view all Volunteers---------------");
+                Console.WriteLine("");
+                Console.WriteLine("");
             }
             else
             {
-                Console.WriteLine("Somehting Went Wrong");
+                Console.WriteLine("Oops! Something went wrong.");
             }
-            
-             List<Volunteer> values = File.ReadAllLines(fileName)
-                                           .Select(v => FromCsv(v))
-                                           .ToList();
 
-            //Start of input for program functions
+            List<Volunteer> values = File.ReadAllLines(fileName)
+                                          .Select(v => FromCsv(v))
+                                          .ToList();
 
             var entry = Console.ReadLine();
-            var found = values.FirstOrDefault(c => c.First == entry);
-            Console.WriteLine("Hello please search for vounteer by name");
+            var entry2 = entry.ToLower();
 
-            if (found != null)
+            if (entry2 == "all")
             {
-                Console.WriteLine(found.Print());
-                Console.WriteLine("Did you want to delete this Volunteer?");
-                Console.WriteLine("-----Y or N-------");
-                var yes = Console.ReadLine();
-                var yes2 = yes.ToLower();
-                if (yes2 == "y")
+                var fileContents = ReadFile(fileName);
+                Console.WriteLine("----All Volunteers----");
+                Console.WriteLine("");
+                Console.WriteLine(fileContents);
+                Console.WriteLine("");
+                Console.WriteLine("----------------------");
+            }
+            else
+            {
+                var found = values.FirstOrDefault(c => c.First == entry2);
+                if (found != null)
                 {
-                    values.Remove(found);
+                    Console.WriteLine("Volunteer Found : ");
+                    Console.WriteLine(found.Print());
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine("Type DELETE to remove this Volunteer from the list.");
+                    Console.WriteLine("Or press any key to continue.");
+                    var yes = Console.ReadLine();
+                    var yes2 = yes.ToLower();
+                    if (yes2 == "delete")
+                    {
+                        values.Remove(found);
+                        var test = values.Select(c => c.Convert()).ToArray();
+                        using (StreamWriter sw = new StreamWriter(fileName))
+                        {
+                            for (var i = 0; i < test.Length; i++)
+                                sw.WriteLine(test[i]);
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("--------------------");
+                    Console.WriteLine(entry + " was not Found!!!");
+                    Console.WriteLine("Please enter Last Name to continue and add new Volunteer.");
+                    Console.WriteLine(" ");
+                    var volunteer = AddVolunteer(entry2);
+                    values.Add(volunteer);
                     var test = values.Select(c => c.Convert()).ToArray();
-
                     using (StreamWriter sw = new StreamWriter(fileName))
                     {
                         for (var i = 0; i < test.Length; i++)
                             sw.WriteLine(test[i]);
                     }
                 }
-                if (yes2 == "n")
-                {
-                    Console.WriteLine("testing");
-                }
             }
-            else
-            {
-                Console.WriteLine("Not Found!!! Please enter new Volunteer Info:");
+       
+
+            
+
+            
+                //break
+                Console.WriteLine("Thank you");
+           // } while (entry != "exit");
                 Console.WriteLine("--------------------");
-                Console.WriteLine(" ");
-                var volunteer = AddVolunteer(entry);
-                values.Add(volunteer);
-
-                var test = values.Select(c => c.Convert()).ToArray();
-                using (StreamWriter sw = new StreamWriter(fileName))
-                {
-                    for (var i = 0; i < test.Length; i++)
-                        sw.WriteLine(test[i]);
-                }
-
-            }
-            Console.WriteLine("Thank you");
-            Console.WriteLine("--------------------");
-            Console.WriteLine("press any key to exit");
-            Console.ReadKey();
+                Console.WriteLine("press any key to exit");
+                Console.ReadKey();
+            
         }
 
 
@@ -109,11 +126,11 @@ namespace ConsoleApp1
         {
             Volunteer returnValue = new Volunteer();
             returnValue.First = first;
-            Console.WriteLine("last");
+            Console.WriteLine("Last Name : ");
             returnValue.Last = Console.ReadLine();
-            Console.WriteLine("phone");
+            Console.WriteLine("Phone Number : ");
             returnValue.Phone = Console.ReadLine();
-            Console.WriteLine("licence");
+            Console.WriteLine("Licence : ");
             returnValue.Licence = Console.ReadLine();
             return returnValue;
 
@@ -133,8 +150,7 @@ namespace ConsoleApp1
     }
     
 }
-//var fileContents = ReadFile(fileName);
-//Console.WriteLine(fileContents);
+
 
 /*(StreamReader sr = File.OpenText(fileName))
                 {
