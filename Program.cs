@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Linq;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace ConsoleApp1
@@ -11,13 +13,12 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            // connecting to directory of VoleadFileunteers.csv
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
-            var fileName = Path.Combine(directory.Parent.Parent.Parent.FullName, @"Volunteers.csv");
+            var fileName = Path.Combine(directory.FullName, @"Volunteers.csv");
             var file = new FileInfo(fileName);
 
-          Start:
+        Start:
             if (file.Exists)
             {
                 OpenFile(fileName);
@@ -99,18 +100,18 @@ namespace ConsoleApp1
                     Console.WriteLine("");
                 }
             }
-       
 
-            
 
-            
-                //break
-                Console.WriteLine("Thank you");
-           // } while (entry != "exit");
-                Console.WriteLine("--------------------");
-                Console.WriteLine("press any key to exit");
-                Console.ReadKey();
-            
+
+
+
+            //break
+            Console.WriteLine("Thank you");
+            // } while (entry != "exit");
+            Console.WriteLine("--------------------");
+            Console.WriteLine("press any key to exit");
+            Console.ReadKey();
+
         }
 
 
@@ -128,9 +129,9 @@ namespace ConsoleApp1
         private static string ReadFile(string fileName)
         {
             using (var reader = new StreamReader(fileName))
-                {
+            {
                 return reader.ReadToEnd();
-                }
+            }
         }
 
         // AddVolunteer
@@ -158,18 +159,7 @@ namespace ConsoleApp1
             volunteer.Licence = (values[3]);
             return volunteer;
         }
- 
+
     }
-    
+
 }
-
-
-/*(StreamReader sr = File.OpenText(fileName))
-                {
-                    string s = " ";
-                    while ((s = sr.ReadLine()) != null)
-                    {
-                        Console.WriteLine(s);
-                        Console.WriteLine("-----------");
-                        //Console.WriteLine("  ");
-                    }    */
