@@ -17,16 +17,11 @@ namespace ConsoleApp1
             var fileName = Path.Combine(directory.Parent.Parent.Parent.FullName, @"Volunteers.csv");
             var file = new FileInfo(fileName);
 
-            //var fileContents = ReadFile(fileName);
-            //Console.WriteLine(fileContents);
-
             if (file.Exists)
             {
                 OpenFile(fileName);
 
                 Console.WriteLine("All Systems Go");
-                Console.WriteLine("Hello please search for vounteer by name");
-                Console.WriteLine("----------------------------------------");
                 Console.WriteLine("----------------------------------------");
             }
             else
@@ -42,6 +37,7 @@ namespace ConsoleApp1
 
             var entry = Console.ReadLine();
             var found = values.FirstOrDefault(c => c.First == entry);
+            Console.WriteLine("Hello please search for vounteer by name");
 
             if (found != null)
             {
@@ -61,6 +57,10 @@ namespace ConsoleApp1
                             sw.WriteLine(test[i]);
                     }
                 }
+                if (yes2 == "n")
+                {
+                    Console.WriteLine("testing");
+                }
             }
             else
             {
@@ -76,12 +76,12 @@ namespace ConsoleApp1
                     for (var i = 0; i < test.Length; i++)
                         sw.WriteLine(test[i]);
                 }
-            }
 
+            }
             Console.WriteLine("Thank you");
             Console.WriteLine("--------------------");
-            Console.WriteLine(" ");
-            return;
+            Console.WriteLine("press any key to exit");
+            Console.ReadKey();
         }
 
 
@@ -129,11 +129,12 @@ namespace ConsoleApp1
             volunteer.Licence = (values[3]);
             return volunteer;
         }
-        //SearchAddDelte
+ 
     }
     
 }
-
+//var fileContents = ReadFile(fileName);
+//Console.WriteLine(fileContents);
 
 /*(StreamReader sr = File.OpenText(fileName))
                 {
