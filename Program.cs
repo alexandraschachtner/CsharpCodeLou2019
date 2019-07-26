@@ -17,6 +17,7 @@ namespace ConsoleApp1
             var fileName = Path.Combine(directory.Parent.Parent.Parent.FullName, @"Volunteers.csv");
             var file = new FileInfo(fileName);
 
+          Start:
             if (file.Exists)
             {
                 OpenFile(fileName);
@@ -47,6 +48,7 @@ namespace ConsoleApp1
                 Console.WriteLine(fileContents);
                 Console.WriteLine("");
                 Console.WriteLine("----------------------");
+                goto Start;
             }
             else
             {
@@ -69,6 +71,13 @@ namespace ConsoleApp1
                             for (var i = 0; i < test.Length; i++)
                                 sw.WriteLine(test[i]);
                         }
+                        Console.WriteLine("");
+                        Console.WriteLine("Volunteer was Succesfully Deleted");
+                        Console.WriteLine("");
+                    }
+                    else
+                    {
+                        goto Start;
                     }
                 }
                 else
@@ -85,6 +94,9 @@ namespace ConsoleApp1
                         for (var i = 0; i < test.Length; i++)
                             sw.WriteLine(test[i]);
                     }
+                    Console.WriteLine("");
+                    Console.WriteLine("Volunteer was Succesfully Added");
+                    Console.WriteLine("");
                 }
             }
        
